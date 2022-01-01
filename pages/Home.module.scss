@@ -1,9 +1,10 @@
+@import "./medias.scss";
+
 .container {
   padding: 0 2rem;
 }
 
 .main {
-  min-height: 100vh;
   padding: 4rem 0;
   flex: 1;
   display: flex;
@@ -14,11 +15,12 @@
 
 .footer {
   display: flex;
-  flex: 1;
+  // flex: 1;
   padding: 2rem 0;
   border-top: 1px solid #eaeaea;
   justify-content: center;
   align-items: center;
+  flex-direction: row;
 }
 
 .footer a {
@@ -27,22 +29,28 @@
   align-items: center;
   flex-grow: 1;
 }
-
-.title a {
-  color: #0070f3;
-  text-decoration: none;
+.Powered {
+  color: #3f47cc;
+  &:hover {
+    color: #fed501;
+  }
 }
 
-.title a:hover,
-.title a:focus,
-.title a:active {
-  text-decoration: underline;
+.title a {
+  // background-image: url("../assets/images/prapor3.jpg");
+  // -webkit-background-clip: text;
+  // -webkit-text-fill-color: transparent;
+  // background-size: 11.5rem;
 }
 
 .title {
-  margin: 0;
+  margin: 0 0 130px 0;
   line-height: 1.15;
-  font-size: 4rem;
+  font-size: 2rem;
+  color: #3f47cc;
+  @include media_tablet {
+    font-size: 4rem;
+  }
 }
 
 .title,
@@ -56,15 +64,6 @@
   font-size: 1.5rem;
 }
 
-.code {
-  background: #fafafa;
-  border-radius: 5px;
-  padding: 0.75rem;
-  font-size: 1.1rem;
-  font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
-    Bitstream Vera Sans Mono, Courier New, monospace;
-}
-
 .grid {
   display: flex;
   align-items: center;
@@ -74,13 +73,13 @@
 }
 
 .card {
+  height: 132px;
   margin: 1rem;
   padding: 1.5rem;
   text-align: left;
   color: inherit;
   text-decoration: none;
   border: 1px solid #eaeaea;
-  border-radius: 10px;
   transition: color 0.15s ease, border-color 0.15s ease;
   max-width: 300px;
 }
@@ -88,8 +87,11 @@
 .card:hover,
 .card:focus,
 .card:active {
-  color: #0070f3;
-  border-color: #0070f3;
+  p {
+    background: -webkit-linear-gradient(#0070f3, #0070f3);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
 }
 
 .card h2 {
