@@ -1,17 +1,22 @@
-import "./app.scss";
+import { useState } from "react";
+
+import { MainContext } from "../context/mainContext";
 import Head from "next/head";
+import "./app.scss";
 
 function MyApp({ Component, pageProps }) {
+  const [projectName, setProjectName] = useState("Helixtip-top");
   return (
     <div>
-      <Head>
-        {/*awesome icones*/}
-        <link
-          rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-        />
-      </Head>
-      <Component {...pageProps} />
+      <MainContext.Provider
+        value={{
+          projectName,
+          setProjectName,
+        }}
+      >
+        <Head />
+        <Component {...pageProps} />
+      </MainContext.Provider>
     </div>
   );
 }
