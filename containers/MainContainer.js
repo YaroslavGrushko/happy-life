@@ -1,3 +1,4 @@
+import cn from "classnames";
 import { useState, useEffect } from "react";
 import { useMain } from "../context/mainContext";
 
@@ -42,7 +43,7 @@ const MainContainer = ({ pageName, descriptionContent, Content }) => {
     }
   }, [activeTabs]);
   return (
-    <div style={{ backgroundColor: `${backgroundColor}` }}>
+    <div style={{ backgroundColor: cn(backgroundColor) }}>
       {/* <div className={styles.bgWrap}>
         <Image
           alt="Background"
