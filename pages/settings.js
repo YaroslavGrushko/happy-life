@@ -3,6 +3,7 @@ import axios from "axios";
 import { useMain } from "../context/mainContext";
 import excel from "../public/images/excel.png";
 import favicon from "../public/images/favicon.png";
+import bgImage from "../public/images/bgImage.png";
 import { FaFileUpload } from "react-icons/fa";
 import MainContainer from "../containers/MainContainer";
 
@@ -90,7 +91,22 @@ export default function Settings() {
             </div>
             <div className={styles.card}>
               <h2>Images &rarr;</h2>
-              <p>download project images</p>
+              <Image src={bgImage} alt="background" />
+              <p>download bg image</p>
+              <div className={styles.customFileUploadWrapper}>
+                <label
+                  htmlFor="bg-image-upload"
+                  className={styles.customFileUpload}
+                >
+                  <FaFileUpload /> &nbsp;Upload File
+                </label>
+              </div>
+              <input
+                id="bg-image-upload"
+                type="file"
+                className={styles.fileUpload}
+                onChange={onFaviconSubmit}
+              />
             </div>
           </div>
         </main>
