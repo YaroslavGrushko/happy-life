@@ -55,11 +55,12 @@ def excelToDatabaseProducts():
     data_df = pd.read_excel(client_xlsx_file, engine='openpyxl')
     for index, item in data_df.iterrows():
         projectName = item['cms_name']
+        backgroundColor = item['background_color']
  
     # # start bash that rebild frontend    
     # subprocess.call(['sh', './sh-scripts-admin/front-r.sh'])
     
-    return jsonify({'cmsName':projectName})
+    return jsonify({'cmsName':projectName, 'backgroundColor':backgroundColor})
 
 
 @app.route('/api/flask/favicon', methods=['GET', 'POST'])

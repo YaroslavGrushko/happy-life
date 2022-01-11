@@ -10,6 +10,7 @@ import styles from "./settings.module.scss";
 
 export default function Settings() {
   const { projectName, setProjectName } = useMain();
+  const { setBackgroundColor } = useMain();
 
   function onSettingsSubmit(event) {
     event.preventDefault();
@@ -19,6 +20,7 @@ export default function Settings() {
 
     axios.post("/api/flask/excelProjectSettings", body).then((response) => {
       setProjectName(response.data.cmsName);
+      setBackgroundColor(response.data.backgroundColor);
     });
   }
 

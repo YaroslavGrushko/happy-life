@@ -19,6 +19,7 @@ import bgImage from "../public/images/box-market-electronic-ordering-shop-basket
 
 const MainContainer = ({ pageName, descriptionContent, Content }) => {
   const { projectName } = useMain();
+  const { backgroundColor } = useMain();
   const router = useRouter();
   const [activeTabs, setActiveTabs] = useState(pageName);
   useEffect(() => {
@@ -41,8 +42,8 @@ const MainContainer = ({ pageName, descriptionContent, Content }) => {
     }
   }, [activeTabs]);
   return (
-    <div>
-      <div className={styles.bgWrap}>
+    <div style={{ backgroundColor: `${backgroundColor}` }}>
+      {/* <div className={styles.bgWrap}>
         <Image
           alt="Background"
           src={bgImage}
@@ -50,7 +51,7 @@ const MainContainer = ({ pageName, descriptionContent, Content }) => {
           objectFit="cover"
           quality={100}
         />
-      </div>
+      </div> */}
       <Head>
         <title>{projectName}</title>
         <meta name="description" content={descriptionContent} />
