@@ -21,6 +21,7 @@ import bgImage from "../public/images/box-market-electronic-ordering-shop-basket
 const MainContainer = ({ pageName, descriptionContent, Content }) => {
   const { projectName } = useMain();
   const { backgroundColor } = useMain();
+  const { backgroundImage } = useMain();
   const router = useRouter();
   const [activeTabs, setActiveTabs] = useState(pageName);
   useEffect(() => {
@@ -47,7 +48,7 @@ const MainContainer = ({ pageName, descriptionContent, Content }) => {
       {/* <div className={styles.bgWrap}>
         <Image
           alt="Background"
-          src={bgImage}
+          src={backgroundImage}
           layout="fill"
           objectFit="cover"
           quality={100}

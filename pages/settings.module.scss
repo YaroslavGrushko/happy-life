@@ -31,7 +31,8 @@
   align-items: center;
   flex-grow: 1;
 }
-.Powered {
+
+.powered {
   color: #3f47cc;
   &:hover {
     color: #fed501;
@@ -67,7 +68,7 @@
 }
 
 .card {
-  height: 438px;
+  height: 450px;
   margin: 1rem;
   padding: 1.5rem;
   text-align: left;
@@ -80,6 +81,9 @@
   backdrop-filter: blur(100px);
   p {
     text-align: center;
+  }
+  .imageFile {
+    display: none;
   }
 }
 
@@ -112,6 +116,7 @@
   height: 1em;
   margin-left: 0.5rem;
 }
+
 .customFileUploadWrapper {
   display: flex;
   justify-content: center;
@@ -119,17 +124,16 @@
   margin-top: 20px;
   overflow: hidden;
 }
+
 .customFileUpload {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 85vw;
   height: 40px;
-
   border: 1px solid #ccc;
   cursor: pointer;
   background-color: white;
-
   z-index: 0;
   overflow: hidden !important;
 }
@@ -147,7 +151,6 @@
   right: 150%;
   top: -5%;
   transform: skew(165deg);
-
   background-color: #00d1d2;
   z-index: -1;
   transition: all 0.3s;
@@ -163,6 +166,10 @@
 }
 
 .fileUpload {
+  display: none;
+}
+
+.noneVisible {
   display: none;
 }
 

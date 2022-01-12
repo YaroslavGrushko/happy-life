@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Image from "next/image";
 import axios from "axios";
 import { useMain } from "../context/mainContext";
@@ -11,9 +12,11 @@ import styles from "./settings.module.scss";
 
 export default function Settings() {
   const { projectName, setProjectName } = useMain();
+  const { setBackgroundImage } = useMain();
   const { setBackgroundColor } = useMain();
+  const [frm_image, setImage] = useState(bgImage);
 
-  function onSettingsSubmit(event) {
+  const onSettingsSubmit = (event) => {
     event.preventDefault();
     var body = new FormData();
     let files_to_upload = event.target.files;
@@ -23,9 +26,9 @@ export default function Settings() {
       setProjectName(response.data.cmsName);
       setBackgroundColor(response.data.backgroundColor);
     });
-  }
+  };
 
-  function onFaviconSubmit(event) {
+  const onFaviconSubmit = (event) => {
     event.preventDefault();
     var body = new FormData();
     let files_to_upload = event.target.files;
@@ -34,7 +37,14 @@ export default function Settings() {
     axios.post("/api/flask/favicon", body).then((response) => {
       console.log("favicon is updated");
     });
-  }
+  };
+
+  const onChangePicture = (e) => {
+    setImage(URL.createObjectURL(e.target.files[0]));
+    setIsUploadVisible(true);
+  };
+  const [isUplaodVisible, setIsUploadVisible] = useState(false);
+
   const Content = () => {
     return (
       <div className={styles.container}>
@@ -85,28 +95,54 @@ export default function Settings() {
                 onChange={onFaviconSubmit}
               />
             </div>
+
             <div className={styles.card}>
               <h2>Db &rarr;</h2>
               <p>download project database</p>
             </div>
+
             <div className={styles.card}>
               <h2>Images &rarr;</h2>
-              <Image src={bgImage} alt="background" />
-              <p>download bg image</p>
-              <div className={styles.customFileUploadWrapper}>
-                <label
-                  htmlFor="bg-image-upload"
-                  className={styles.customFileUpload}
-                >
-                  <FaFileUpload /> &nbsp;Upload File
-                </label>
-              </div>
-              <input
-                id="bg-image-upload"
-                type="file"
-                className={styles.fileUpload}
-                onChange={onFaviconSubmit}
+              <Image
+                id="image"
+                src={frm_image}
+                alt="background"
+                layout="responsive"
+                objectFit="contain"
+                width={500}
+                height={500}
               />
+              <p>download bg image</p>
+              <form>
+                <div className={styles.customFileUploadWrapper}>
+                  <label
+                    htmlFor="bg-image-upload"
+                    className={
+                      isUplaodVisible
+                        ? styles.customFileUpload
+                        : styles.noneVisible
+                    }
+                  >
+                    <FaFileUpload /> &nbsp;Upload File
+                  </label>
+                  <label
+                    htmlFor="chooseFile"
+                    className={
+                      !isUplaodVisible
+                        ? styles.customFileUpload
+                        : styles.noneVisible
+                    }
+                  >
+                    <FaFileUpload /> &nbsp;Choose File
+                  </label>
+                  <input
+                    id="chooseFile"
+                    type="file"
+                    className={styles.imageFile}
+                    onChange={onChangePicture}
+                  />
+                </div>
+              </form>
             </div>
           </div>
         </main>
@@ -118,7 +154,7 @@ export default function Settings() {
             rel="noopener noreferrer"
           >
             Powered by&nbsp;
-            <span className={styles.Powered}>YG</span>
+            <span className={styles.powered}>YG</span>
           </a>
         </footer> */}
       </div>
