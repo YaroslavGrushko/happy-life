@@ -67,13 +67,24 @@ export default function Settings() {
               <h2>Settings &rarr;</h2>
               <Image src={excel} alt="excel" />
               <form onSubmit={onSettingsSubmit}></form>
-              <p>Download Settings File</p>
+              <div className={styles.customFileUploadWrapper}>
+                <a
+                  className={styles.customFileUpload}
+                  // onClick={downloadLinkOnclickHandler}
+                  href={
+                    "/api/flask/setupDownload" /*?x-access-token=" +
+                  JSON.parse(localStorage.getItem("x-access-token"))*/
+                  }
+                >
+                  Download File from CMS
+                </a>
+              </div>
               <div className={styles.customFileUploadWrapper}>
                 <label
                   htmlFor="file-upload"
                   className={styles.customFileUpload}
                 >
-                  <FaFileUpload /> &nbsp;Upload File
+                  <FaFileUpload /> &nbsp;Upload File to CMS
                 </label>
               </div>
               <input
