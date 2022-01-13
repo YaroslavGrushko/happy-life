@@ -4,7 +4,7 @@ import axios from "axios";
 import { useMain } from "../context/mainContext";
 import excel from "../public/images/excel.png";
 import favicon from "../public/images/favicon.png";
-import bgImage from "../public/images/bgImage.png";
+import backgroundImage from "../public/images/background.png";
 import { FaFileUpload } from "react-icons/fa";
 import MainContainer from "../containers/MainContainer";
 
@@ -12,9 +12,8 @@ import styles from "./settings.module.scss";
 
 export default function Settings() {
   const { projectName, setProjectName } = useMain();
-  const { setBackgroundImage } = useMain();
   const { setBackgroundColor } = useMain();
-  const [frm_image, setImage] = useState(bgImage);
+  const [frm_image, setImage] = useState(backgroundImage);
 
   const onSettingsSubmit = (event) => {
     event.preventDefault();
@@ -36,6 +35,16 @@ export default function Settings() {
 
     axios.post("/api/flask/favicon", body).then((response) => {
       console.log("favicon is updated");
+    });
+  };
+
+  const onBgImageSubmit = (event) => {
+    var body = new FormData();
+    let files_to_upload = event.target.files;
+    body.append("file", files_to_upload[0]);
+
+    axios.post("/api/flask/bgImage", body).then((response) => {
+      console.log("background image is updated");
     });
   };
 
@@ -125,6 +134,12 @@ export default function Settings() {
                   >
                     <FaFileUpload /> &nbsp;Upload File
                   </label>
+                  <input
+                    id="bg-image-upload"
+                    type="file"
+                    className={styles.fileUpload}
+                    onChange={onBgImageSubmit}
+                  />
                   <label
                     htmlFor="chooseFile"
                     className={

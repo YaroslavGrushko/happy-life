@@ -7,7 +7,6 @@ import "./app.scss";
 function MyApp({ Component, pageProps }) {
   const [projectName, setProjectName] = useState("Helixtip-top");
   const [backgroundColor, setBackgroundColor] = useState("fff");
-  const [backgroundImage, setBackgroundImage] = useState();
   return (
     <div>
       <MainContext.Provider
@@ -16,8 +15,6 @@ function MyApp({ Component, pageProps }) {
           setProjectName,
           backgroundColor,
           setBackgroundColor,
-          backgroundImage,
-          setBackgroundImage,
         }}
       >
         <Head />

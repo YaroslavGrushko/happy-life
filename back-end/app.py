@@ -73,6 +73,16 @@ def saveFavicon():
 
     return jsonify({'status':200})
 
+@app.route('/api/flask/bgImage', methods=['GET', 'POST'])
+def saveBackground():
+    bgImage = request.files['file']
+    current_directory=os.path.realpath(__file__)
+    completeName = os.path.abspath(os.path.join(current_directory, '../../public/images'))
+    completeName=os.path.join(completeName, 'background.png')
+    bgImage.save(completeName)
+
+    return jsonify({'status':200})
+
 
 if __name__ == '__main__':
      app.run(debug = True)

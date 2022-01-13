@@ -16,12 +16,11 @@ import { BiSearchAlt } from "react-icons/bi";
 import { RiUser5Line, RiUser5Fill } from "react-icons/ri";
 import { GrSettingsOption } from "react-icons/gr";
 import { GrServices } from "react-icons/gr";
-import bgImage from "../public/images/box-market-electronic-ordering-shop-basket.webp";
+import bgImage from "../public/images/background.png";
 
 const MainContainer = ({ pageName, descriptionContent, Content }) => {
   const { projectName } = useMain();
   const { backgroundColor } = useMain();
-  const { backgroundImage } = useMain();
   const router = useRouter();
   const [activeTabs, setActiveTabs] = useState(pageName);
   useEffect(() => {
@@ -45,15 +44,15 @@ const MainContainer = ({ pageName, descriptionContent, Content }) => {
   }, [activeTabs]);
   return (
     <div style={{ backgroundColor: cn(backgroundColor) }}>
-      {/* <div className={styles.bgWrap}>
+      <div className={styles.bgWrap}>
         <Image
           alt="Background"
-          src={backgroundImage}
+          src={bgImage}
           layout="fill"
           objectFit="cover"
           quality={100}
         />
-      </div> */}
+      </div>
       <Head>
         <title>{projectName}</title>
         <meta name="description" content={descriptionContent} />
