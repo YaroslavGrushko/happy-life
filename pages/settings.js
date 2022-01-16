@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import axios from "axios";
 import { useMain } from "../context/mainContext";
@@ -6,8 +6,10 @@ import excel from "../public/images/excel.png";
 import favicon from "../public/images/favicon.png";
 import backgroundImage from "../public/images/background.png";
 import { FaFileUpload } from "react-icons/fa";
-import MainContainer from "../containers/MainContainer";
-
+import { BiDownload } from "react-icons/bi";
+import MainContainer from "../components/MainContainer";
+import { ButtonInput } from "../components/ButtonInput";
+import { ButtonDownload } from "../components/ButtonDownload";
 import styles from "./settings.module.scss";
 
 export default function Settings() {
@@ -26,7 +28,9 @@ export default function Settings() {
       setBackgroundColor(response.data.backgroundColor);
     });
   };
-
+  const downloadLinkOnclickHandler = () => {
+    alert("downloading may take several minutes");
+  };
   const onFaviconSubmit = (event) => {
     event.preventDefault();
     var body = new FormData();
@@ -54,44 +58,36 @@ export default function Settings() {
   };
   const [isUplaodVisible, setIsUploadVisible] = useState(false);
 
+  const [token, setToken] = useState();
+  useEffect(() => {
+    let token = JSON.parse(localStorage.getItem("x-access-token"));
+    setToken(token);
+  }, []);
+
   const Content = () => {
     return (
       <div className={styles.container}>
         <main className={styles.main}>
-          <h1 className={styles.title}>
-            Welcome to settings of {projectName} CMS
-          </h1>
+          <h1 className={styles.title}>{projectName} settings</h1>
 
           <div className={styles.grid}>
             <div className={styles.card}>
               <h2>Settings &rarr;</h2>
               <Image src={excel} alt="excel" />
-              <form onSubmit={onSettingsSubmit}></form>
-              <div className={styles.customFileUploadWrapper}>
-                <a
-                  className={styles.customFileUpload}
-                  // onClick={downloadLinkOnclickHandler}
-                  href={
-                    "/api/flask/setupDownload" /*?x-access-token=" +
-                  JSON.parse(localStorage.getItem("x-access-token"))*/
-                  }
-                >
-                  Download File from CMS
-                </a>
-              </div>
-              <div className={styles.customFileUploadWrapper}>
-                <label
-                  htmlFor="file-upload"
-                  className={styles.customFileUpload}
-                >
-                  <FaFileUpload /> &nbsp;Upload File to CMS
-                </label>
-              </div>
-              <input
-                id="file-upload"
-                type="file"
-                className={styles.fileUpload}
+
+              <ButtonDownload
+                labelText="Download Settings from CMS"
+                Icon={BiDownload}
+                href={"/api/flask/setupDownload?x-access-token=" + token}
+                onClick={downloadLinkOnclickHandler}
+              />
+
+              <ButtonInput
+                inputType="file"
+                labelText="Upload Settings to CMS"
+                Icon={FaFileUpload}
                 onChange={onSettingsSubmit}
+                inputId="settings"
               />
             </div>
 
@@ -99,20 +95,13 @@ export default function Settings() {
               <h2>Favicon &rarr;</h2>
               <Image src={favicon} alt="favicon" />
               <form onSubmit={onFaviconSubmit}></form>
-              <p>Download Favicon</p>
-              <div className={styles.customFileUploadWrapper}>
-                <label
-                  htmlFor="favicon-upload"
-                  className={styles.customFileUpload}
-                >
-                  <FaFileUpload /> &nbsp;Upload File
-                </label>
-              </div>
-              <input
-                id="favicon-upload"
-                type="file"
-                className={styles.fileUpload}
+              <p>Upload Favicon</p>
+              <ButtonInput
+                inputType="file"
+                labelText="Upload file to CMS"
+                Icon={FaFileUpload}
                 onChange={onFaviconSubmit}
+                inputId="favicon"
               />
             </div>
 
@@ -132,9 +121,9 @@ export default function Settings() {
                 width={500}
                 height={500}
               />
-              <p>download bg image</p>
+              <p>Upload background image</p>
               <form>
-                <div className={styles.customFileUploadWrapper}>
+                {/* <div className={styles.customFileUploadWrapper}>
                   <label
                     htmlFor="bg-image-upload"
                     className={
@@ -150,24 +139,44 @@ export default function Settings() {
                     type="file"
                     className={styles.fileUpload}
                     onChange={onBgImageSubmit}
+                  /> */}
+
+                {isUplaodVisible && (
+                  <ButtonInput
+                    inputType="file"
+                    labelText="Upload file to CMS"
+                    Icon={FaFileUpload}
+                    onChange={onBgImageSubmit}
+                    inputId="bgImage"
                   />
-                  <label
-                    htmlFor="chooseFile"
-                    className={
-                      !isUplaodVisible
-                        ? styles.customFileUpload
-                        : styles.noneVisible
-                    }
-                  >
-                    <FaFileUpload /> &nbsp;Choose File
-                  </label>
-                  <input
-                    id="chooseFile"
-                    type="file"
-                    className={styles.imageFile}
+                )}
+
+                {/* <label
+                  htmlFor="chooseFile"
+                  className={
+                    !isUplaodVisible
+                      ? styles.customFileUpload
+                      : styles.noneVisible
+                  }
+                >
+                  <FaFileUpload /> &nbsp;Choose File
+                </label>
+                <input
+                  id="chooseFile"
+                  type="file"
+                  className={styles.imageFile}
+                  onChange={onChangePicture}
+                /> */}
+                {!isUplaodVisible && (
+                  <ButtonInput
+                    inputType="file"
+                    labelText="Upload file to CMS"
+                    Icon={FaFileUpload}
                     onChange={onChangePicture}
+                    inputId="bgChange"
                   />
-                </div>
+                )}
+                {/* </div> */}
               </form>
             </div>
           </div>

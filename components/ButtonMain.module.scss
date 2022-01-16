@@ -1,0 +1,48 @@
+@import "../pages/medias.scss";
+
+.ButtonMainWrapper {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.ButtonMain {
+  display: flex;
+  justify-content: center;
+  width: 85vw;
+  height: 40px;
+  align-items: center;
+  border: 1px solid #ccc;
+  background-color: white;
+  cursor: pointer;
+  overflow: hidden !important;
+  z-index: 0;
+}
+
+.ButtonMain:hover,
+.ButtonMain:focus-visible {
+  color: white;
+}
+
+.ButtonMain:after {
+  position: absolute;
+  content: "";
+  width: 200%;
+  height: 110%;
+  right: 150%;
+  top: -5%;
+  transform: skew(165deg);
+  background-color: #00d1d2;
+  z-index: -1;
+  transition: all 0.3s;
+}
+
+.ButtonMain:hover {
+  color: black;
+  border: none;
+}
+
+.ButtonMain:hover:after {
+  right: -5%;
+}

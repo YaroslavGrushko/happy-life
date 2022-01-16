@@ -7,6 +7,11 @@ import "./app.scss";
 function MyApp({ Component, pageProps }) {
   const [projectName, setProjectName] = useState("Helixtip-top");
   const [backgroundColor, setBackgroundColor] = useState("fff");
+  const [authTokens, setAuthTokens] = useState();
+  const setTokens = (data) => {
+    localStorage.setItem("x-access-token", JSON.stringify(data));
+    setAuthTokens(data);
+  };
   return (
     <div>
       <MainContext.Provider
@@ -15,6 +20,8 @@ function MyApp({ Component, pageProps }) {
           setProjectName,
           backgroundColor,
           setBackgroundColor,
+          authTokens,
+          setAuthTokens: setTokens,
         }}
       >
         <Head />

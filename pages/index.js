@@ -1,5 +1,5 @@
 import { useMain } from "../context/mainContext";
-import MainContainer from "../containers/MainContainer";
+import MainContainer from "../components/MainContainer";
 import styles from "./home.module.scss";
 const Home = () => {
   const { projectName } = useMain();

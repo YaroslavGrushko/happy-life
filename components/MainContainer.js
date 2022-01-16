@@ -34,8 +34,8 @@ const MainContainer = ({ pageName, descriptionContent, Content }) => {
       case "settings":
         router.push("/settings");
         break;
-      case "account":
-        router.push("/account");
+      case "login":
+        router.push("/login");
         break;
       default:
         router.push("/");
@@ -43,7 +43,10 @@ const MainContainer = ({ pageName, descriptionContent, Content }) => {
     }
   }, [activeTabs]);
   return (
-    <div style={{ backgroundColor: cn(backgroundColor) }}>
+    <div
+      className={styles.MainContainer}
+      style={{ backgroundColor: cn(backgroundColor) }}
+    >
       <div className={styles.bgWrap}>
         <Image
           alt="Background"
@@ -106,17 +109,17 @@ const MainContainer = ({ pageName, descriptionContent, Content }) => {
           )}
         </div>
         <div className={styles.btnTab}>
-          {activeTabs === "account" ? (
+          {activeTabs === "login" ? (
             <RiUser5Fill
               size="35"
               color="#000"
-              onClick={() => setActiveTabs("account")}
+              onClick={() => setActiveTabs("login")}
             />
           ) : (
             <RiUser5Line
               size="35"
               color="#000"
-              onClick={() => setActiveTabs("account")}
+              onClick={() => setActiveTabs("login")}
             />
           )}
         </div>

@@ -1,0 +1,46 @@
+.ButtonDownloadWrapper {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  margin-top: 10px;
+  overflow: hidden;
+}
+.ButtonDownload {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 85vw;
+  height: 40px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  background-color: white;
+  z-index: 0;
+  overflow: hidden !important;
+}
+
+.ButtonDownload:hover,
+.ButtonDownload:focus-visible {
+  color: white;
+}
+
+.ButtonDownload:after {
+  position: absolute;
+  content: "";
+  width: 200%;
+  height: 110%;
+  right: 150%;
+  top: -5%;
+  transform: skew(165deg);
+  background-color: #00d1d2;
+  z-index: -1;
+  transition: all 0.3s;
+}
+
+.ButtonDownload:hover {
+  color: black;
+  border: none;
+}
+
+.ButtonDownload:hover:after {
+  right: -5%;
+}

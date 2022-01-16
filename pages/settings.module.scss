@@ -107,7 +107,7 @@
 }
 
 .card p {
-  margin: 0;
+  margin: 17px 0 0;
   font-size: 1.25rem;
   line-height: 1.5;
 }
@@ -117,57 +117,9 @@
   margin-left: 0.5rem;
 }
 
-.customFileUploadWrapper {
-  display: flex;
-  justify-content: center;
-  position: relative;
-  margin-top: 20px;
-  overflow: hidden;
-}
-
-.customFileUpload {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 85vw;
-  height: 40px;
-  border: 1px solid #ccc;
-  cursor: pointer;
-  background-color: white;
-  z-index: 0;
-  overflow: hidden !important;
-}
-
-.customFileUpload:hover,
-.customFileUpload:focus-visible {
-  color: white;
-}
-
-.customFileUpload:after {
-  position: absolute;
-  content: "";
-  width: 200%;
-  height: 110%;
-  right: 150%;
-  top: -5%;
-  transform: skew(165deg);
-  background-color: #00d1d2;
-  z-index: -1;
-  transition: all 0.3s;
-}
-
-.customFileUpload:hover {
-  color: black;
-  border: none;
-}
-
-.customFileUpload:hover:after {
-  right: -5%;
-}
-
-.fileUpload {
-  display: none;
-}
+// .fileUpload {
+//   display: none;
+// }
 
 .noneVisible {
   display: none;
