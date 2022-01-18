@@ -4,7 +4,7 @@ import axios from "axios";
 
 import styles from "./login.module.scss";
 import MainContainer from "../components/MainContainer";
-import { ButtonMain } from "../components/ButtonMain";
+import { Button } from "../components/Button";
 import { useRouter } from "next/router";
 
 export default function login() {
@@ -153,13 +153,13 @@ export default function login() {
                 />
               </>
             )}
-            <ButtonMain
+            <Button
               onClick={postLogin}
               className={styles.loginButton}
               text={"Sign In"}
             />
 
-            <ButtonMain
+            <Button
               onClick={!isSignUpPressed ? signupOnClick : postSignup}
               className={styles.signupButton}
               text={"Sign Up"}

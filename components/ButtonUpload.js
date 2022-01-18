@@ -1,6 +1,6 @@
-import styles from "./ButtonInput.module.scss";
+import styles from "./Button.module.scss";
 
-export const ButtonInput = ({
+export const ButtonUpload = ({
   inputId,
   inputType,
   labelText,
@@ -9,8 +9,8 @@ export const ButtonInput = ({
 }) => {
   return (
     <>
-      <div className={styles.ButtonInputWrapper}>
-        <label htmlFor={inputId} className={styles.ButtonInput}>
+      <div className={styles.ButtonWrapper}>
+        <label htmlFor={inputId} className={styles.Button}>
           <Icon /> &nbsp;{labelText}
         </label>
       </div>

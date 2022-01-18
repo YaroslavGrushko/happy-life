@@ -1,11 +1,12 @@
-.ButtonDownloadWrapper {
+.ButtonWrapper {
   display: flex;
   justify-content: center;
   position: relative;
   margin-top: 10px;
   overflow: hidden;
 }
-.ButtonDownload {
+
+.Button {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -18,12 +19,12 @@
   overflow: hidden !important;
 }
 
-.ButtonDownload:hover,
-.ButtonDownload:focus-visible {
+.Button:hover,
+.Button:focus-visible {
   color: white;
 }
 
-.ButtonDownload:after {
+.Button:after {
   position: absolute;
   content: "";
   width: 200%;
@@ -36,11 +37,11 @@
   transition: all 0.3s;
 }
 
-.ButtonDownload:hover {
+.Button:hover {
   color: black;
   border: none;
 }
 
-.ButtonDownload:hover:after {
+.Button:hover:after {
   right: -5%;
 }

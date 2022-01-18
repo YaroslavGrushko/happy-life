@@ -8,7 +8,7 @@ import backgroundImage from "../public/images/background.png";
 import { FaFileUpload } from "react-icons/fa";
 import { BiDownload } from "react-icons/bi";
 import MainContainer from "../components/MainContainer";
-import { ButtonInput } from "../components/ButtonInput";
+import { ButtonUpload } from "../components/ButtonUpload";
 import { ButtonDownload } from "../components/ButtonDownload";
 import styles from "./settings.module.scss";
 
@@ -80,7 +80,7 @@ export default function Settings() {
                 onClick={downloadLinkOnclickHandler}
               />
 
-              <ButtonInput
+              <ButtonUpload
                 inputType="file"
                 labelText="Upload Settings to CMS"
                 Icon={FaFileUpload}
@@ -94,7 +94,7 @@ export default function Settings() {
               <Image src={favicon} alt="favicon" />
               <form onSubmit={onFaviconSubmit}></form>
               <p>Upload Favicon</p>
-              <ButtonInput
+              <ButtonUpload
                 inputType="file"
                 labelText="Upload file to CMS"
                 Icon={FaFileUpload}
@@ -121,26 +121,8 @@ export default function Settings() {
               />
               <p>Upload background image</p>
               <form>
-                {/* <div className={styles.customFileUploadWrapper}>
-                  <label
-                    htmlFor="bg-image-upload"
-                    className={
-                      isUplaodVisible
-                        ? styles.customFileUpload
-                        : styles.noneVisible
-                    }
-                  >
-                    <FaFileUpload /> &nbsp;Upload File
-                  </label>
-                  <input
-                    id="bg-image-upload"
-                    type="file"
-                    className={styles.fileUpload}
-                    onChange={onBgImageSubmit}
-                  /> */}
-
                 {isUplaodVisible && (
-                  <ButtonInput
+                  <ButtonUpload
                     inputType="file"
                     labelText="Upload file to CMS"
                     Icon={FaFileUpload}
@@ -149,24 +131,8 @@ export default function Settings() {
                   />
                 )}
 
-                {/* <label
-                  htmlFor="chooseFile"
-                  className={
-                    !isUplaodVisible
-                      ? styles.customFileUpload
-                      : styles.noneVisible
-                  }
-                >
-                  <FaFileUpload /> &nbsp;Choose File
-                </label>
-                <input
-                  id="chooseFile"
-                  type="file"
-                  className={styles.imageFile}
-                  onChange={onChangePicture}
-                /> */}
                 {!isUplaodVisible && (
-                  <ButtonInput
+                  <ButtonUpload
                     inputType="file"
                     labelText="Upload file to CMS"
                     Icon={FaFileUpload}
