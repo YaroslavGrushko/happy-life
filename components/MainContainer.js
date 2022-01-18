@@ -6,6 +6,7 @@ import Image from "next/image";
 import Head from "next/head";
 import styles from "./MainContainer.module.scss";
 import { useRouter } from "next/router";
+import { TitleCard } from "./TitleCard";
 
 import {
   RiHomeSmile2Line,
@@ -16,13 +17,23 @@ import { BiSearchAlt } from "react-icons/bi";
 import { RiUser5Line, RiUser5Fill } from "react-icons/ri";
 import { GrSettingsOption } from "react-icons/gr";
 import { GrServices } from "react-icons/gr";
+import { FaBlog } from "react-icons/fa";
+import { GrBlog } from "react-icons/gr";
 import bgImage from "../public/images/background.png";
 
-const MainContainer = ({ pageName, descriptionContent, Content }) => {
+const MainContainer = ({
+  children,
+  pageName,
+  header,
+  message,
+  descriptionContent,
+  isSettingsVisible,
+}) => {
   const { projectName } = useMain();
   const { backgroundColor } = useMain();
   const router = useRouter();
   const [activeTabs, setActiveTabs] = useState(pageName);
+
   useEffect(() => {
     switch (activeTabs) {
       case "home":
@@ -34,8 +45,17 @@ const MainContainer = ({ pageName, descriptionContent, Content }) => {
       case "settings":
         router.push("/settings");
         break;
+      case "blog":
+        router.push("/blog");
+        break;
       case "login":
         router.push("/login");
+        break;
+      case "userDashboard":
+        router.push("/userDashboard");
+        break;
+      case "adminDashboard":
+        router.push("/adminDashboard");
         break;
       default:
         router.push("/");
@@ -61,7 +81,8 @@ const MainContainer = ({ pageName, descriptionContent, Content }) => {
         <meta name="description" content={descriptionContent} />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Content />
+      <TitleCard text={header} className={styles.title} message={message} />
+      {children}
       <div className={styles.bottomNav}>
         <div className={styles.btnTab}>
           {activeTabs === "home" ? (
@@ -93,18 +114,35 @@ const MainContainer = ({ pageName, descriptionContent, Content }) => {
             />
           )}
         </div>
+        {isSettingsVisible && (
+          <div className={styles.btnTab}>
+            {activeTabs === "settings" ? (
+              <GrServices
+                size="35"
+                color="#000"
+                onClick={() => setActiveTabs("settings")}
+              />
+            ) : (
+              <GrSettingsOption
+                size="35"
+                color="#000"
+                onClick={() => setActiveTabs("settings")}
+              />
+            )}
+          </div>
+        )}
         <div className={styles.btnTab}>
-          {activeTabs === "settings" ? (
-            <GrServices
+          {activeTabs === "blog" ? (
+            <FaBlog
               size="35"
               color="#000"
-              onClick={() => setActiveTabs("settings")}
+              onClick={() => setActiveTabs("blog")}
             />
           ) : (
-            <GrSettingsOption
+            <GrBlog
               size="35"
               color="#000"
-              onClick={() => setActiveTabs("settings")}
+              onClick={() => setActiveTabs("blog")}
             />
           )}
         </div>

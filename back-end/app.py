@@ -56,7 +56,7 @@ def signup_admin(username, password):
         db.create_all()
         name = username
         password = password
-        phone = '2'
+        phone = '1'
         email='grushko.kpi@gmail.com'
         user = User.query.filter_by(admin=True).first() # if this returns a user, then the email already exists in database
         if user: 
@@ -66,7 +66,36 @@ def signup_admin(username, password):
         db.session.commit()
         return 'ok' 
         
-signup_admin('admin2','2')
+signup_admin('grushko.kpi@gmail.com','1')
+
+def signup_user(username,password):
+     with app.app_context():
+        db.create_all()
+        name = username
+        password = password
+        phone = '2'
+        email=username
+        user = User.query.filter_by(name=name).first() # if this returns a user, then the email already exists in database
+        if user: 
+            return 'Already Exists'
+        
+        new_user = User(public_id=str(uuid.uuid4()), name=name, password=generate_password_hash(password, method='sha256'),phone=phone, email=email, admin=False)
+        db.session.add(new_user)
+        db.session.commit()
+        return 'ok' 
+
+signup_user('dumerion@gmail.com', '2')
+
+@app.route('/api/flask/signup', methods=['GET', 'POST'])
+#@cross_origin()
+def signup():
+    auth = request.authorization
+
+    name=auth.username
+    password=auth.password
+
+    status = signup_user(name,password)
+    return jsonify({'data' : status})
 
 @app.route('/api/flask/login', methods=['GET', 'POST'])
 #@cross_origin()
@@ -80,7 +109,12 @@ def login():
         return jsonify({'data' : 'user not found'})
     if check_password_hash(user.password, auth.password):
         token = jwt.encode({'public_id' : user.public_id, 'exp' : datetime.utcnow() + timedelta(minutes=300)}, app.config['SECRET_KEY'])
-        isAdmin = user.admin
+        isAdmin=False
+        if not user.admin:
+            isAdmin = False
+        else:
+            isAdmin = user.admin
+        
         return jsonify({'data' : token.decode('UTF-8'), 'username':user.name, 'isAdmin':isAdmin})
     return jsonify({'data' : 'Could not verify'})
 
@@ -89,15 +123,11 @@ def token_required_for_downloads(f):
     @wraps(f)
     def decorated(*args, **kwargs):
         token = None
-        # get x-access-token
         token = request.args['x-access-token']
-        # if there is no token
         if not token:
             return (jsonify({'message' : 'Token is missing!'}), 401)
         try: 
-            # decode token
             data = jwt.decode(token, app.config['SECRET_KEY'])
-            # get current user
             current_user = User.query.filter_by(public_id=data['public_id']).first()
         except:
             return (jsonify({'message' : 'Token is invalid!'}), 401)

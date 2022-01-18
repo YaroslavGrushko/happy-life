@@ -68,8 +68,6 @@ export default function Settings() {
     return (
       <div className={styles.container}>
         <main className={styles.main}>
-          <h1 className={styles.title}>{projectName} settings</h1>
-
           <div className={styles.grid}>
             <div className={styles.card}>
               <h2>Settings &rarr;</h2>
@@ -198,6 +196,7 @@ export default function Settings() {
   return (
     <MainContainer
       pageName={"settings"}
+      header={projectName + " settings"}
       descriptionContent={"Settings page of helixtip.top CMS"}
       Content={Content}
     />

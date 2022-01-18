@@ -12,6 +12,8 @@ function MyApp({ Component, pageProps }) {
     localStorage.setItem("x-access-token", JSON.stringify(data));
     setAuthTokens(data);
   };
+  const [isSignUpPressed, setIsSignUpPressed] = useState();
+
   return (
     <div>
       <MainContext.Provider
@@ -22,6 +24,8 @@ function MyApp({ Component, pageProps }) {
           setBackgroundColor,
           authTokens,
           setAuthTokens: setTokens,
+          isSignUpPressed,
+          setIsSignUpPressed,
         }}
       >
         <Head />

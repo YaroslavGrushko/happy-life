@@ -1,0 +1,28 @@
+@import "../pages/medias.scss";
+.TitleCard {
+  width: 100vw;
+  padding: 0.7rem;
+  text-align: center;
+  border: 1px solid #eaeaea;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(100px);
+  @include media_tablet {
+    padding: 15px;
+    h1 {
+      margin: 0;
+    }
+  }
+}
+.ErrorTitleCard {
+  @extend .TitleCard;
+  h1 {
+    background: yellow;
+    color: red;
+  }
+}
+.WarningTitleCard {
+  @extend .TitleCard;
+  h1 {
+    color: blue;
+  }
+}

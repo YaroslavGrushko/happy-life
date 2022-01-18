@@ -1,6 +1,5 @@
 import { useMain } from "../context/mainContext";
 import MainContainer from "../components/MainContainer";
-import styles from "./home.module.scss";
 const Home = () => {
   const { projectName } = useMain();
 
@@ -8,13 +7,11 @@ const Home = () => {
     <div>
       <MainContainer
         pageName={"home"}
+        header={"Welcome to " + projectName + " CMS!"}
         descriptionContent={"Home page of Helixtip-top CMS"}
+        isSettingsVisible={false}
         Content={() => {
-          return (
-            <div className={styles.Container}>
-              <h1 className={styles.title}>Welcome to {projectName} CMS!</h1>
-            </div>
-          );
+          return <div></div>;
         }}
       />
     </div>

@@ -3,8 +3,6 @@
 
 .container {
   box-sizing: border-box;
-  height: 100vh;
-  padding-top: 43px;
 }
 
 .main {
@@ -41,11 +39,11 @@
 
 .title {
   line-height: 1.15;
-  font-size: 2rem;
+  font-size: 16px;
   color: #3f47cc;
   margin-top: 0px;
   @include media_tablet {
-    font-size: 4rem;
+    font-size: 1.5rem;
   }
 }
 
@@ -65,6 +63,7 @@
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
+  padding-top: 30px;
 }
 
 .card {
@@ -79,6 +78,7 @@
   max-width: 300px;
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
   backdrop-filter: blur(100px);
+
   p {
     text-align: center;
   }
@@ -116,10 +116,6 @@
   height: 1em;
   margin-left: 0.5rem;
 }
-
-// .fileUpload {
-//   display: none;
-// }
 
 .noneVisible {
   display: none;

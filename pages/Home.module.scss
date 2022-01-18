@@ -4,15 +4,14 @@
 .Container {
   box-sizing: border-box;
   height: 100vh;
-  padding-top: 43px;
 }
 .title {
   line-height: 1.15;
-  font-size: 2rem;
+  font-size: 16px;
   color: #3f47cc;
   margin-top: 0px;
   @include media_tablet {
-    font-size: 4rem;
+    font-size: 1.5rem;
   }
 }
 
