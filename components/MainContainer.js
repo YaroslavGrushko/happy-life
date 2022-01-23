@@ -1,6 +1,5 @@
 import cn from "classnames";
 import { useState, useEffect } from "react";
-import { useMain } from "../context/mainContext";
 
 import Image from "next/image";
 import Head from "next/head";
@@ -20,6 +19,9 @@ import { GrServices } from "react-icons/gr";
 import { FaBlog } from "react-icons/fa";
 import { GrBlog } from "react-icons/gr";
 import bgImage from "../public/images/background.png";
+import LocalizedStrings from "react-localization";
+import settingsLocalizations from "../settings.json";
+import * as localizationKeys from "../localizationKeys";
 
 const MainContainer = ({
   children,
@@ -29,8 +31,13 @@ const MainContainer = ({
   descriptionContent,
   isSettingsVisible,
 }) => {
-  const { projectName } = useMain();
-  const { backgroundColor } = useMain();
+  const localizationsData = {
+    default: settingsLocalizations,
+  };
+  const localizedStrings = new LocalizedStrings(localizationsData, {
+    logsEnabled: false,
+  });
+
   const router = useRouter();
   const [activeTabs, setActiveTabs] = useState(pageName);
 
@@ -65,7 +72,11 @@ const MainContainer = ({
   return (
     <div
       className={styles.MainContainer}
-      style={{ backgroundColor: cn(backgroundColor) }}
+      style={{
+        backgroundColor: cn(
+          localizedStrings[localizationKeys.CMS_BACKGROUND_COLOR]
+        ),
+      }}
     >
       <div className={styles.bgWrap}>
         <Image
@@ -77,7 +88,7 @@ const MainContainer = ({
         />
       </div>
       <Head>
-        <title>{projectName}</title>
+        <title>{localizedStrings[localizationKeys.CMS_NAME]}</title>
         <meta name="description" content={descriptionContent} />
         <link rel="icon" href="/favicon.ico" />
       </Head>

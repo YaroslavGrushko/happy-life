@@ -1,12 +1,14 @@
 import cn from "classnames";
 import styles from "./Button.module.scss";
 
-export const Button = ({ text, onClick, className }) => {
+const Button = ({ text, onClick, className, Icon: Icon }) => {
   return (
     <div className={cn(styles.ButtonWrapper, className)}>
       <label onClick={onClick} className={styles.Button}>
-        {text}
+        {Icon && <Icon />} &nbsp;&nbsp;{text}
       </label>
     </div>
   );
 };
+
+export default Button;

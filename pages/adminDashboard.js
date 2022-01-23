@@ -6,7 +6,7 @@ const adminDashboard = () => {
         pageName={"adminDashboard"}
         header={"Admin personal area"}
         descriptionContent={"Personal area of Helixtip-top CMS"}
-        isSettingsVisible={false}
+        isSettingsVisible={true}
         Content={() => {
           return <div></div>;
         }}

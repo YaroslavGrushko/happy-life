@@ -15,6 +15,7 @@ import jwt
 import uuid
 
 from functools import wraps
+import json
 
 db = SQLAlchemy()
 app = Flask(__name__)
@@ -22,7 +23,8 @@ app = Flask(__name__)
 app.config['CORS_HEADERS'] = 'Content-Type'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = '9OLWxND4o83j4K4iucms'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://xgbua_happy_life:ez4aaz27kyz@195.234.4.56:5432/xgbua_happy_life'
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://xgbua_happy_life:ez4aaz27kyz@195.234.4.56:5432/xgbua_happy_life'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://admin:yjhlbxtcrbq@178.63.27.189:5432/admin'
 db.init_app(app)
 
 # user's table
@@ -40,8 +42,11 @@ class User(db.Model):
 
 class Settingscms(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    projectName = db.Column(db.String(50))
-    backgroundColor = db.Column(db.String(50))
+    cmsName = db.Column(db.String(50))
+    cmsBackgroundColor = db.Column(db.String(50))
+    titleBackgroundColor = db.Column(db.String(50))
+    titleTextColor = db.Column(db.String(50))
+    cardBackgroundColor = db.Column(db.String(50))
 
 with app.app_context():
         db.create_all()
@@ -133,24 +138,54 @@ def token_required_for_downloads(f):
             return (jsonify({'message' : 'Token is invalid!'}), 401)
         return f(current_user, *args, **kwargs)
     return decorated
-
-@app.route('/api/flask/excelProjectSettings', methods=['GET', 'POST'])
-def excelToDatabaseProducts():
-    client_xlsx_file = request.files['file']
+    
+def saveExcelToDb(client_xlsx_file):
     data_df = pd.read_excel(client_xlsx_file, engine='openpyxl')
     for index, item in data_df.iterrows():
-        projectName = item['cms_name']
-        backgroundColor = item['background_color']
+        cmsName = item['cmsName']
+        cmsBackgroundColor = item['cmsBackgroundColor']
+        titleBackgroundColor = item['titleBackgroundColor']
+        titleTextColor = item['titleTextColor']
+        cardBackgroundColor=item['cardBackgroundColor']
+
+    settings={
+        "CMS_NAME":cmsName,
+        "CMS_BACKGROUND_COLOR":cmsBackgroundColor,
+        "TITLE_BACKGROUND_COLOR":titleBackgroundColor, 
+        "TITLE_TEXT_COLOR": titleTextColor,
+        "CARD_BACKGROUND_COLOR":cardBackgroundColor,  }
+
+    json_string = json.dumps(settings)
+    current_directory=os.path.realpath(__file__)
+    completeName = os.path.abspath(os.path.join(current_directory, '../../'))
+    completeName=os.path.join(completeName, 'settings.json')
     
-    new_settings = Settingscms(projectName=projectName, backgroundColor=backgroundColor)
+    with open(completeName, 'w') as outfile:
+        outfile.write(json_string)
+    
+    new_settings = Settingscms(cmsName=cmsName, cmsBackgroundColor=cmsBackgroundColor, titleBackgroundColor=titleBackgroundColor, titleTextColor=titleTextColor, cardBackgroundColor=cardBackgroundColor)
+    
     db.session.add(new_settings)
     db.session.commit()
 
     # # start bash that rebild frontend    
     # subprocess.call(['sh', './sh-scripts-admin/front-r.sh'])
     
-    return jsonify({'cmsName':projectName, 'backgroundColor':backgroundColor})
+    return jsonify({'cmsName':cmsName, 'cmsBackgroundColor':cmsBackgroundColor, 'titleBackgroundColor':titleBackgroundColor, 'titleTextColor':titleTextColor, 'cardBackgroundColor':cardBackgroundColor})
 
+@app.route('/api/flask/excelCmsSettings', methods=['GET', 'POST'])
+def excelToDatabase():
+    client_xlsx_file = request.files['file']
+    response = saveExcelToDb(client_xlsx_file)
+    return response
+
+@app.route('/api/flask/resetToFactorySettings', methods=['GET', 'POST'])
+def resetToFactorySettings():
+    current_directory=os.path.realpath(__file__)
+    completeName = os.path.abspath(os.path.join(current_directory, '../../public'))
+    completeName=os.path.join(completeName, 'DefaultSettingsCMS.xlsx')
+    response = saveExcelToDb(completeName)
+    return response
 
 @app.route('/api/flask/favicon', methods=['GET', 'POST'])
 def saveFavicon():

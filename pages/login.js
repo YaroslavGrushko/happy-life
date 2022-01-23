@@ -4,10 +4,10 @@ import axios from "axios";
 
 import styles from "./login.module.scss";
 import MainContainer from "../components/MainContainer";
-import { Button } from "../components/Button";
+import Button from "../components/Button";
 import { useRouter } from "next/router";
 
-export default function login() {
+const login = () => {
   const router = useRouter();
 
   const { setAuthTokens } = useMain();
@@ -180,4 +180,5 @@ export default function login() {
       <Content />
     </MainContainer>
   );
-}
+};
+export default login;

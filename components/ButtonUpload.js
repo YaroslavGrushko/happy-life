@@ -1,3 +1,4 @@
+import cn from "classnames";
 import styles from "./Button.module.scss";
 
 export const ButtonUpload = ({
@@ -6,12 +7,13 @@ export const ButtonUpload = ({
   labelText,
   Icon: Icon,
   onChange,
+  className,
 }) => {
   return (
     <>
-      <div className={styles.ButtonWrapper}>
+      <div className={cn(styles.ButtonWrapper, className)}>
         <label htmlFor={inputId} className={styles.Button}>
-          <Icon /> &nbsp;{labelText}
+          <Icon /> &nbsp;&nbsp;{labelText}
         </label>
       </div>
 
