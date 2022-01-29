@@ -17,15 +17,16 @@ import uuid
 from functools import wraps
 import json
 
-db = SQLAlchemy()
+
 app = Flask(__name__)
 
 app.config['CORS_HEADERS'] = 'Content-Type'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = '9OLWxND4o83j4K4iucms'
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://xgbua_happy_life:ez4aaz27kyz@195.234.4.56:5432/xgbua_happy_life'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://admin:yjhlbxtcrbq@178.63.27.189:5432/admin'
-db.init_app(app)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://admin:yjhlbxtcrbq@178.63.27.189:5432/admin'
+
+db = SQLAlchemy()
 
 # user's table
 class User(db.Model):
@@ -48,8 +49,11 @@ class Settingscms(db.Model):
     titleTextColor = db.Column(db.String(50))
     cardBackgroundColor = db.Column(db.String(50))
 
+
+
 with app.app_context():
-        db.create_all()
+    db.init_app(app)
+    db.create_all()
     
 
 @app.route('/api/flask/', methods=['GET'])
@@ -223,6 +227,47 @@ def SetupDownload(name):
     results.to_excel( os.path.join(basedir, 'SettingsCMS.xlsx'))
     return send_from_directory(basedir, 'SettingsCMS.xlsx', attachment_filename='SettingsCMS.xlsx')
 
+# @app.route("/")
+# def home():
+#     return "Hello, Flask!"
 
 if __name__ == '__main__':
      app.run(debug = True)
+
+
+
+
+
+
+
+# from flask import Flask
+# from flask_sqlalchemy import SQLAlchemy
+
+# app = Flask(__name__)
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://admin:yjhlbxtcrbq@178.63.27.189:5432/admin'
+# db = SQLAlchemy(app)
+
+
+# class Usernew(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+#     username = db.Column(db.String, unique=True, nullable=False)
+#     email = db.Column(db.String, unique=True, nullable=False)
+
+
+# db.session.add(Usernew(username="Flask", email="example@example.com"))
+# db.session.commit()
+
+# users = Usernew.query.all()   
+
+
+
+
+
+
+
+# from flask import Flask
+# app = Flask(__name__)
+
+# @app.route("/")
+# def home():
+#     return "Hello, Flask!"
