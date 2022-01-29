@@ -6,7 +6,7 @@
 .pnp.js
 
 # venv dependencies
-/back-end/venv/Lib
+/back-end/venv
 
 # testing
 /coverage
