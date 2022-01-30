@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 import { useMain } from "../context/mainContext";
 import axios from "axios";
 
-import styles from "./login.module.scss";
+import styles from "./Login.module.scss";
 import MainContainer from "../components/MainContainer";
 import Button from "../components/Button";
 import { useRouter } from "next/router";
 
-const login = () => {
+const Login = () => {
   const router = useRouter();
 
   const { setAuthTokens } = useMain();
@@ -19,12 +19,12 @@ const login = () => {
   const [message, setMessage] = useState(false);
 
   const Content = () => {
-    const [login, setLogin] = useState("");
+    const [Login, setLogin] = useState("");
     const [password, setPassword] = useState("");
     const [passwordRepeat, setPasswordRepeat] = useState("");
     async function postLogin() {
       if (!isSignUpPressed) {
-        var encode_userName = unescape(encodeURIComponent(login));
+        var encode_userName = unescape(encodeURIComponent(Login));
         var encode_password = unescape(encodeURIComponent(password));
         await axios
           .post(
@@ -37,7 +37,7 @@ const login = () => {
           .then((result) => {
             setMessage();
             if (result.data.isAdmin) {
-              localStorage.setItem("username", login);
+              localStorage.setItem("username", Login);
               localStorage.setItem("password", password);
 
               setAuthTokens(result.data.data);
@@ -64,7 +64,7 @@ const login = () => {
 
     async function postSignup() {
       if (passwordRepeat == password) {
-        var encode_userName = unescape(encodeURIComponent(login));
+        var encode_userName = unescape(encodeURIComponent(Login));
         var encode_password = unescape(encodeURIComponent(password));
         await axios
           .post(
@@ -115,7 +115,7 @@ const login = () => {
                 setLogin(e.target.value);
               }}
               autoComplete="on"
-              value={login}
+              value={Login}
               key={0}
             />
 
@@ -171,7 +171,7 @@ const login = () => {
   };
   return (
     <MainContainer
-      pageName={"login"}
+      pageName={"Login"}
       header={header}
       message={message}
       descriptionContent={"Login"}
@@ -181,4 +181,4 @@ const login = () => {
     </MainContainer>
   );
 };
-export default login;
+export default Login;
