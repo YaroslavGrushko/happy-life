@@ -68,7 +68,7 @@ const MainContainer = ({
         router.push("/");
         break;
     }
-  }, [activeTabs]);
+  }, [activeTabs, router]);
   return (
     <div
       className={styles.MainContainer}
