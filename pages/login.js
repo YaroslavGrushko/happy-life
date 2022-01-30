@@ -19,12 +19,12 @@ const Login = () => {
   const [message, setMessage] = useState(false);
 
   const Content = () => {
-    const [Login, setLogin] = useState("");
+    const [login, setLogin] = useState("");
     const [password, setPassword] = useState("");
     const [passwordRepeat, setPasswordRepeat] = useState("");
     async function postLogin() {
       if (!isSignUpPressed) {
-        var encode_userName = unescape(encodeURIComponent(Login));
+        var encode_userName = unescape(encodeURIComponent(login));
         var encode_password = unescape(encodeURIComponent(password));
         await axios
           .post(
@@ -37,7 +37,7 @@ const Login = () => {
           .then((result) => {
             setMessage();
             if (result.data.isAdmin) {
-              localStorage.setItem("username", Login);
+              localStorage.setItem("username", login);
               localStorage.setItem("password", password);
 
               setAuthTokens(result.data.data);
@@ -64,7 +64,7 @@ const Login = () => {
 
     async function postSignup() {
       if (passwordRepeat == password) {
-        var encode_userName = unescape(encodeURIComponent(Login));
+        var encode_userName = unescape(encodeURIComponent(login));
         var encode_password = unescape(encodeURIComponent(password));
         await axios
           .post(
@@ -115,7 +115,7 @@ const Login = () => {
                 setLogin(e.target.value);
               }}
               autoComplete="on"
-              value={Login}
+              value={login}
               key={0}
             />
 
@@ -171,10 +171,10 @@ const Login = () => {
   };
   return (
     <MainContainer
-      pageName={"Login"}
+      pageName={"login"}
       header={header}
       message={message}
-      descriptionContent={"Login"}
+      descriptionContent={"login"}
       isSettingsVisible={false}
     >
       <Content />
