@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useMain } from "../context/mainContext";
 import axios from "axios";
 
-import styles from "./Login.module.scss";
+import styles from "./login.module.scss";
 import MainContainer from "../components/MainContainer";
 import Button from "../components/Button";
 import { useRouter } from "next/router";
