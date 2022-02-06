@@ -1,31 +1,44 @@
-import { useState } from "react";
+import cn from "classnames";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import axios from "axios";
 import { useMain } from "../context/mainContext";
 import excel from "../public/images/excel.png";
 import favicon from "../public/images/favicon.png";
-import bgImage from "../public/images/bgImage.png";
+import backgroundImage from "../public/images/background.png";
 import { FaFileUpload } from "react-icons/fa";
-import MainContainer from "../containers/MainContainer";
+import { BiDownload } from "react-icons/bi";
+import { GrPowerReset } from "react-icons/gr";
+import MainContainer from "../components/MainContainer";
+import Button from "../components/Button";
+import { ButtonUpload } from "../components/ButtonUpload";
+import { ButtonDownload } from "../components/ButtonDownload";
+import SettingsCard from "../components/SettingsCard";
+import LocalizedStrings from "react-localization";
+import settingsLocalizations from "../settings.json";
+import * as localizationKeys from "../localizationKeys";
 
 import styles from "./settings.module.scss";
 
 export default function Settings() {
-  const { projectName, setProjectName } = useMain();
-  const { setBackgroundImage } = useMain();
-  const { setBackgroundColor } = useMain();
-  const [frm_image, setImage] = useState(bgImage);
-
+  const [frm_image, setImage] = useState(backgroundImage);
+  const localizationsData = {
+    default: settingsLocalizations,
+  };
+  const localizedStrings = new LocalizedStrings(localizationsData, {
+    logsEnabled: false,
+  });
   const onSettingsSubmit = (event) => {
     event.preventDefault();
     var body = new FormData();
     let files_to_upload = event.target.files;
     body.append("file", files_to_upload[0]);
 
-    axios.post("/api/flask/excelProjectSettings", body).then((response) => {
-      setProjectName(response.data.cmsName);
-      setBackgroundColor(response.data.backgroundColor);
-    });
+    axios.post("/api/flask/excelCmsSettings", body).then((response) => {});
+  };
+
+  const downloadLinkOnclickHandler = () => {
+    alert("downloading may take several minutes");
   };
 
   const onFaviconSubmit = (event) => {
@@ -39,111 +52,114 @@ export default function Settings() {
     });
   };
 
+  const onBgImageSubmit = (event) => {
+    var body = new FormData();
+    let files_to_upload = event.target.files;
+    body.append("file", files_to_upload[0]);
+
+    axios.post("/api/flask/bgImage", body).then((response) => {
+      console.log("background image is updated");
+    });
+  };
+
   const onChangePicture = (e) => {
     setImage(URL.createObjectURL(e.target.files[0]));
     setIsUploadVisible(true);
   };
+
+  const ResetToFactorySettings = () => {
+    axios.post("/api/flask/resetToFactorySettings", {}).then((response) => {});
+  };
+
   const [isUplaodVisible, setIsUploadVisible] = useState(false);
+
+  const [token, setToken] = useState();
+  useEffect(() => {
+    let token = JSON.parse(localStorage.getItem("x-access-token"));
+    setToken(token);
+  }, []);
 
   const Content = () => {
     return (
       <div className={styles.container}>
         <main className={styles.main}>
-          <h1 className={styles.title}>
-            Welcome to settings of {projectName} CMS
-          </h1>
-
           <div className={styles.grid}>
-            <div className={styles.card}>
-              <h2>Settings &rarr;</h2>
-              <Image src={excel} alt="excel" />
-              <form onSubmit={onSettingsSubmit}></form>
-              <p>Download Settings File</p>
-              <div className={styles.customFileUploadWrapper}>
-                <label
-                  htmlFor="file-upload"
-                  className={styles.customFileUpload}
-                >
-                  <FaFileUpload /> &nbsp;Upload File
-                </label>
-              </div>
-              <input
-                id="file-upload"
-                type="file"
-                className={styles.fileUpload}
+            <SettingsCard title={"Settings"} imgSrc={excel}>
+              <ButtonDownload
+                className={styles.Download}
+                labelText="Download settings from CMS"
+                Icon={BiDownload}
+                href={"/api/flask/setupDownload?x-access-token=" + token}
+                onClick={downloadLinkOnclickHandler}
+              />
+
+              <ButtonUpload
+                inputType="file"
+                labelText="Upload settings to CMS"
+                Icon={FaFileUpload}
                 onChange={onSettingsSubmit}
+                inputId="settings"
+                className={styles.Upload}
               />
-            </div>
 
-            <div className={styles.card}>
-              <h2>Favicon &rarr;</h2>
-              <Image src={favicon} alt="favicon" />
+              <Button
+                text={"Reset to factory settings"}
+                Icon={GrPowerReset}
+                className={styles.Button}
+                onClick={ResetToFactorySettings}
+              />
+            </SettingsCard>
+
+            <SettingsCard title={"Favicon"} imgSrc={favicon}>
               <form onSubmit={onFaviconSubmit}></form>
-              <p>Download Favicon</p>
-              <div className={styles.customFileUploadWrapper}>
-                <label
-                  htmlFor="favicon-upload"
-                  className={styles.customFileUpload}
-                >
-                  <FaFileUpload /> &nbsp;Upload File
-                </label>
-              </div>
-              <input
-                id="favicon-upload"
-                type="file"
-                className={styles.fileUpload}
+              <p>Upload Favicon</p>
+              <ButtonUpload
+                className={styles.Upload}
+                inputType="file"
+                labelText="Upload file to CMS"
+                Icon={FaFileUpload}
                 onChange={onFaviconSubmit}
+                inputId="favicon"
               />
-            </div>
+            </SettingsCard>
 
-            <div className={styles.card}>
-              <h2>Db &rarr;</h2>
+            <SettingsCard title={"Db"}>
               <p>download project database</p>
-            </div>
+            </SettingsCard>
 
-            <div className={styles.card}>
-              <h2>Images &rarr;</h2>
-              <Image
-                id="image"
-                src={frm_image}
-                alt="background"
-                layout="responsive"
-                objectFit="contain"
-                width={500}
-                height={500}
-              />
-              <p>download bg image</p>
-              <form>
-                <div className={styles.customFileUploadWrapper}>
-                  <label
-                    htmlFor="bg-image-upload"
-                    className={
-                      isUplaodVisible
-                        ? styles.customFileUpload
-                        : styles.noneVisible
-                    }
-                  >
-                    <FaFileUpload /> &nbsp;Upload File
-                  </label>
-                  <label
-                    htmlFor="chooseFile"
-                    className={
-                      !isUplaodVisible
-                        ? styles.customFileUpload
-                        : styles.noneVisible
-                    }
-                  >
-                    <FaFileUpload /> &nbsp;Choose File
-                  </label>
-                  <input
-                    id="chooseFile"
-                    type="file"
-                    className={styles.imageFile}
-                    onChange={onChangePicture}
-                  />
-                </div>
-              </form>
-            </div>
+            <SettingsCard
+              title={"Images"}
+              imgSrc={frm_image}
+              imageId="image"
+              imageAlt="background"
+            >
+              <>
+                <p>Upload background image</p>
+                <form>
+                  {isUplaodVisible && (
+                    <ButtonUpload
+                      className={styles.Upload}
+                      inputType="file"
+                      labelText="Upload file to CMS"
+                      Icon={FaFileUpload}
+                      onChange={onBgImageSubmit}
+                      inputId="bgImage"
+                    />
+                  )}
+
+                  {!isUplaodVisible && (
+                    <ButtonUpload
+                      className={styles.Upload}
+                      inputType="file"
+                      labelText="Upload file to CMS"
+                      Icon={FaFileUpload}
+                      onChange={onChangePicture}
+                      inputId="bgChange"
+                    />
+                  )}
+                </form>
+              </>
+            </SettingsCard>
           </div>
         </main>
 
@@ -163,8 +179,10 @@ export default function Settings() {
   return (
     <MainContainer
       pageName={"settings"}
+      header={cn(localizedStrings[localizationKeys.CMS_NAME]) + " settings"}
       descriptionContent={"Settings page of helixtip.top CMS"}
-      Content={Content}
-    />
+    >
+      <Content />
+    </MainContainer>
   );
 }

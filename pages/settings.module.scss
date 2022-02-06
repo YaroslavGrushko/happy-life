@@ -3,8 +3,6 @@
 
 .container {
   box-sizing: border-box;
-  height: 100vh;
-  padding-top: 43px;
 }
 
 .main {
@@ -41,11 +39,11 @@
 
 .title {
   line-height: 1.15;
-  font-size: 2rem;
+  font-size: 16px;
   color: #3f47cc;
   margin-top: 0px;
   @include media_tablet {
-    font-size: 4rem;
+    font-size: 1.5rem;
   }
 }
 
@@ -65,114 +63,21 @@
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-}
-
-.card {
-  height: 450px;
-  margin: 1rem;
-  padding: 1.5rem;
-  text-align: left;
-  color: inherit;
-  text-decoration: none;
-  border: 1px solid #eaeaea;
-  transition: color 0.15s ease, border-color 0.15s ease;
-  max-width: 300px;
-  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-  backdrop-filter: blur(100px);
-  p {
-    text-align: center;
-  }
-  .imageFile {
-    display: none;
-  }
-}
-
-.card:hover,
-.card:focus,
-.card:active {
-  p {
-    background: -webkit-linear-gradient(#0070f3, #0070f3);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-}
-
-.card:hover {
-  box-shadow: unset;
-}
-
-.card h2 {
-  margin: 0 0 1rem 0;
-  font-size: 1.5rem;
-}
-
-.card p {
-  margin: 0;
-  font-size: 1.25rem;
-  line-height: 1.5;
-}
-
-.logo {
-  height: 1em;
-  margin-left: 0.5rem;
-}
-
-.customFileUploadWrapper {
-  display: flex;
-  justify-content: center;
-  position: relative;
-  margin-top: 20px;
-  overflow: hidden;
-}
-
-.customFileUpload {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 85vw;
-  height: 40px;
-  border: 1px solid #ccc;
-  cursor: pointer;
-  background-color: white;
-  z-index: 0;
-  overflow: hidden !important;
-}
-
-.customFileUpload:hover,
-.customFileUpload:focus-visible {
-  color: white;
-}
-
-.customFileUpload:after {
-  position: absolute;
-  content: "";
-  width: 200%;
-  height: 110%;
-  right: 150%;
-  top: -5%;
-  transform: skew(165deg);
-  background-color: #00d1d2;
-  z-index: -1;
-  transition: all 0.3s;
-}
-
-.customFileUpload:hover {
-  color: black;
-  border: none;
-}
-
-.customFileUpload:hover:after {
-  right: -5%;
-}
-
-.fileUpload {
-  display: none;
+  padding-top: 30px;
 }
 
 .noneVisible {
   display: none;
 }
-
+.Download {
+  margin-top: 20px;
+}
+.Upload {
+  margin-top: 10px;
+}
+.Button {
+  margin-top: 10px;
+}
 @media (max-width: 600px) {
   .grid {
     width: 100%;

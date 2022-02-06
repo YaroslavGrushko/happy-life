@@ -1,11 +1,11 @@
 import cn from "classnames";
 import { useState, useEffect } from "react";
-import { useMain } from "../context/mainContext";
 
 import Image from "next/image";
 import Head from "next/head";
 import styles from "./MainContainer.module.scss";
 import { useRouter } from "next/router";
+import { TitleCard } from "./TitleCard";
 
 import {
   RiHomeSmile2Line,
@@ -16,14 +16,31 @@ import { BiSearchAlt } from "react-icons/bi";
 import { RiUser5Line, RiUser5Fill } from "react-icons/ri";
 import { GrSettingsOption } from "react-icons/gr";
 import { GrServices } from "react-icons/gr";
-import bgImage from "../public/images/box-market-electronic-ordering-shop-basket.webp";
+import { FaBlog } from "react-icons/fa";
+import { GrBlog } from "react-icons/gr";
+import bgImage from "../public/images/background.png";
+import LocalizedStrings from "react-localization";
+import settingsLocalizations from "../settings.json";
+import * as localizationKeys from "../localizationKeys";
 
-const MainContainer = ({ pageName, descriptionContent, Content }) => {
-  const { projectName } = useMain();
-  const { backgroundColor } = useMain();
-  const { backgroundImage } = useMain();
+const MainContainer = ({
+  children,
+  pageName,
+  header,
+  message,
+  descriptionContent,
+  isSettingsVisible,
+}) => {
+  const localizationsData = {
+    default: settingsLocalizations,
+  };
+  const localizedStrings = new LocalizedStrings(localizationsData, {
+    logsEnabled: false,
+  });
+
   const router = useRouter();
   const [activeTabs, setActiveTabs] = useState(pageName);
+
   useEffect(() => {
     switch (activeTabs) {
       case "home":
@@ -35,8 +52,17 @@ const MainContainer = ({ pageName, descriptionContent, Content }) => {
       case "settings":
         router.push("/settings");
         break;
-      case "account":
-        router.push("/account");
+      case "blog":
+        router.push("/blog");
+        break;
+      case "login":
+        router.push("/login");
+        break;
+      case "userDashboard":
+        router.push("/userDashboard");
+        break;
+      case "adminDashboard":
+        router.push("/adminDashboard");
         break;
       default:
         router.push("/");
@@ -44,22 +70,30 @@ const MainContainer = ({ pageName, descriptionContent, Content }) => {
     }
   }, [activeTabs]);
   return (
-    <div style={{ backgroundColor: cn(backgroundColor) }}>
-      {/* <div className={styles.bgWrap}>
+    <div
+      className={styles.MainContainer}
+      style={{
+        backgroundColor: cn(
+          localizedStrings[localizationKeys.CMS_BACKGROUND_COLOR]
+        ),
+      }}
+    >
+      <div className={styles.bgWrap}>
         <Image
           alt="Background"
-          src={backgroundImage}
+          src={bgImage}
           layout="fill"
           objectFit="cover"
           quality={100}
         />
-      </div> */}
+      </div>
       <Head>
-        <title>{projectName}</title>
+        <title>{localizedStrings[localizationKeys.CMS_NAME]}</title>
         <meta name="description" content={descriptionContent} />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Content />
+      <TitleCard text={header} className={styles.title} message={message} />
+      {children}
       <div className={styles.bottomNav}>
         <div className={styles.btnTab}>
           {activeTabs === "home" ? (
@@ -91,33 +125,50 @@ const MainContainer = ({ pageName, descriptionContent, Content }) => {
             />
           )}
         </div>
+        {isSettingsVisible && (
+          <div className={styles.btnTab}>
+            {activeTabs === "settings" ? (
+              <GrServices
+                size="35"
+                color="#000"
+                onClick={() => setActiveTabs("settings")}
+              />
+            ) : (
+              <GrSettingsOption
+                size="35"
+                color="#000"
+                onClick={() => setActiveTabs("settings")}
+              />
+            )}
+          </div>
+        )}
         <div className={styles.btnTab}>
-          {activeTabs === "settings" ? (
-            <GrServices
+          {activeTabs === "blog" ? (
+            <FaBlog
               size="35"
               color="#000"
-              onClick={() => setActiveTabs("settings")}
+              onClick={() => setActiveTabs("blog")}
             />
           ) : (
-            <GrSettingsOption
+            <GrBlog
               size="35"
               color="#000"
-              onClick={() => setActiveTabs("settings")}
+              onClick={() => setActiveTabs("blog")}
             />
           )}
         </div>
         <div className={styles.btnTab}>
-          {activeTabs === "account" ? (
+          {activeTabs === "login" ? (
             <RiUser5Fill
               size="35"
               color="#000"
-              onClick={() => setActiveTabs("account")}
+              onClick={() => setActiveTabs("login")}
             />
           ) : (
             <RiUser5Line
               size="35"
               color="#000"
-              onClick={() => setActiveTabs("account")}
+              onClick={() => setActiveTabs("login")}
             />
           )}
         </div>
