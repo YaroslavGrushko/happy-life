@@ -3,7 +3,7 @@ from flask import send_from_directory
 
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import func, cast, or_, case
-from sqlalchemy.dialects import postgresql
+# from sqlalchemy.dialects import postgresql
 from sqlalchemy import create_engine
 import os
 import pandas as pd
@@ -217,57 +217,16 @@ def saveBackground():
 def SetupDownload(name):
     # get cureent file directory
     basedir = os.path.abspath(os.path.dirname(__file__))
-    # path = os.path.join(basedir, "../public/")
     # sqlalchemy connection to postgres db
     # sql_engine = create_engine('postgres://xgbua_smdb:aebb56257nm@postgres17.1gb.ua:5432/xgbua_smdb')
-    sql_engine = create_engine('postgres://xgbua_happy_life:ez4aaz27kyz@195.234.4.56:5432/xgbua_happy_life')
+    sql_engine = create_engine('postgresql://xgbua_happy_life:ez4aaz27kyz@195.234.4.56:5432/xgbua_happy_life')
     # let's make sql query with py pandas
     results = pd.read_sql_query('select * from Settingscms', sql_engine)
 
     results.to_excel( os.path.join(basedir, 'SettingsCMS.xlsx'))
     return send_from_directory(basedir, 'SettingsCMS.xlsx', attachment_filename='SettingsCMS.xlsx')
 
-# @app.route("/")
-# def home():
-#     return "Hello, Flask!"
-
 if __name__ == '__main__':
      app.run(debug = True)
 
 
-
-
-
-
-
-# from flask import Flask
-# from flask_sqlalchemy import SQLAlchemy
-
-# app = Flask(__name__)
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://admin:yjhlbxtcrbq@178.63.27.189:5432/admin'
-# db = SQLAlchemy(app)
-
-
-# class Usernew(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     username = db.Column(db.String, unique=True, nullable=False)
-#     email = db.Column(db.String, unique=True, nullable=False)
-
-
-# db.session.add(Usernew(username="Flask", email="example@example.com"))
-# db.session.commit()
-
-# users = Usernew.query.all()   
-
-
-
-
-
-
-
-# from flask import Flask
-# app = Flask(__name__)
-
-# @app.route("/")
-# def home():
-#     return "Hello, Flask!"

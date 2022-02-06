@@ -27,7 +27,6 @@ const SettingsCard = ({ children, title, imgSrc, imageId, imageAlt }) => {
           id={imageId}
           alt={imageAlt}
           src={imgSrc}
-          alt="excel"
           layout="responsive"
           objectFit="contain"
           width={400}

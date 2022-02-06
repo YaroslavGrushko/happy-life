@@ -7,7 +7,7 @@ import MainContainer from "../components/MainContainer";
 import Button from "../components/Button";
 import { useRouter } from "next/router";
 
-const login = () => {
+const Login = () => {
   const router = useRouter();
 
   const { setAuthTokens } = useMain();
@@ -174,11 +174,11 @@ const login = () => {
       pageName={"login"}
       header={header}
       message={message}
-      descriptionContent={"Login"}
+      descriptionContent={"login"}
       isSettingsVisible={false}
     >
       <Content />
     </MainContainer>
   );
 };
-export default login;
+export default Login;
