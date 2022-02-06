@@ -123,7 +123,7 @@ def login():
             isAdmin = False
         else:
             isAdmin = user.admin
-        
+        print(jwt.__version__)
         return jsonify({'data' : token.decode('UTF-8'), 'username':user.name, 'isAdmin':isAdmin})
     return jsonify({'data' : 'Could not verify'})
 
